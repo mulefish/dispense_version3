@@ -44,3 +44,19 @@ def cyan(msg):
 
 def log(msg):
     print(msg)
+
+def verdict(a, b, msg):
+    if a == b:
+        cyan("PASS " + msg )
+    else:
+        yellow("FAIL " + msg)
+
+def getUsers():
+    users = {}
+    users["kermitt"] = "Happy$100"
+    users["Shabone"] = "bonny"
+    users["Eeboo"] = "boo"
+    users["Maggy"] = "arrawarrru"
+    users["Mr. C"] = "meow"
+    return users
+
