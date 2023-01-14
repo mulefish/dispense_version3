@@ -5,30 +5,6 @@ https://github.com/mulefish/dispense_version3
 # Flow
 
 ```mermaid
-flowchart TB
-    c1-->a2
-    
-    subgraph one
-    a1-->a2
-    end
-    
-    subgraph two
-    b1-->b2
-    end
-    
-    
-    subgraph three
-    c1-->c2
-    end
-    one --> two
-    three --> two
-    two --> c2
-
-```
-
-
-
-```mermaid
     flowchart TB
     A[Splash page]
     B[Login]
@@ -36,18 +12,19 @@ flowchart TB
     D[Pick stores]
     E[Pick products]
     F[Money]
-    G[Tag]
-
+    G[Get Tag]
+    H[Pick vending machine]
+    I[Upload inventory]
 
 
     A-->B
-    subgraph one
-        B-->C
-        C-->B
+    subgraph Merchant
+        B-->H
+        H-->I
     end
     
     A-->D
-    subgraph two
+    subgraph Enduser
         D-->E
         E-->F
         F-->G
