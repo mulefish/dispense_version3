@@ -2,10 +2,7 @@
 https://github.com/mulefish/dispense_version3
 
 # DB 
-Postgres
-pgadmin
-tables: 
-vending 
+Postgres? Currently focusing on SQLite, because it is a easier. Later TODO: Port to PostGres.
 
 # DB Local machine commands: 
 pmontgomery@FVFH51FAQ6LW bin % brew services stop postgresql
@@ -27,7 +24,7 @@ pmontgomery@FVFH51FAQ6LW bin % brew services stop postgresql
     D[Pick stores]
     E[Pick products]
     F[Money]
-    G[Get Tag]
+    QR[QR]
     H[Pick vending machine]
     Inventory[Upload inventory]
 
@@ -42,7 +39,7 @@ pmontgomery@FVFH51FAQ6LW bin % brew services stop postgresql
     subgraph Enduser
         D-->E
         E-->F
-        F-->G
+        F-->QR
     end
     D-->DB
     DB-->D
