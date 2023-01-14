@@ -2,7 +2,7 @@ from flask import Flask, send_file
 from flask import jsonify
 from flask import render_template
 from flask import request 
-from pretty_print import yellow, cyan, log, green
+from common import yellow, cyan, log, green
 import time
 # import sqlite3
 # from helpers.qr_code_maker import getQRCodeImage

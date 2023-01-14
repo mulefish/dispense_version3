@@ -58,6 +58,11 @@ def protected():
     return render_template('main.html', username=current_user.name)
 
 
+@app.route('/')
+def lulu():
+    cyan("index")
+    return render_template('index.html')
+
 
 # Create a logout route
 @app.route('/logout')
@@ -83,7 +88,7 @@ if __name__ == '__main__':
     setUsers()
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
-
+    app.debug = True # REMOVE THIS ONCE IN PRODUCTION
     cyan("http://34.83.236.108:4040 with database at data/dispense.db")
     cyan("http://localhost:4040 with database at data/dispense.db")
 
