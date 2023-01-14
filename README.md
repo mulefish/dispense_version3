@@ -22,7 +22,7 @@ pmontgomery@FVFH51FAQ6LW bin % brew services stop postgresql
 ```mermaid
     flowchart TB
     A[Splash page]
-    B[Login]
+    TheMerchant[Login]
     DB[DB]
     D[Pick stores]
     E[Pick products]
@@ -32,11 +32,10 @@ pmontgomery@FVFH51FAQ6LW bin % brew services stop postgresql
     Inventory[Upload inventory]
 
 
-    A-- log in -->B
+    A-- log in -->TheMerchant
     subgraph Merchant
-        B-->H
+        TheMerchant-->H
         H-->Inventory
-        Inventory-->DB
     end
     
     A-->D
@@ -48,7 +47,8 @@ pmontgomery@FVFH51FAQ6LW bin % brew services stop postgresql
     D-->DB
     DB-->D
 
-    B-->DB
-    DB-->B
+    TheMerchant-->DB
+    DB-->TheMerchant
+    Inventory-->DB
 
 ```
