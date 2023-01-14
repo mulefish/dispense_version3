@@ -8,7 +8,7 @@ https://github.com/mulefish/dispense_version3
     flowchart TB
     A[Splash page]
     B[Login]
-    C[DB]
+    DB[DB]
     D[Pick stores]
     E[Pick products]
     F[Money]
@@ -29,6 +29,10 @@ https://github.com/mulefish/dispense_version3
         E-->F
         F-->G
     end
+    D-->DB
+    DB-->D
 
+    B-->DB
+    DB-->B
 
 ```
