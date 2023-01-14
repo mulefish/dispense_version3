@@ -17,7 +17,7 @@ https://github.com/mulefish/dispense_version3
     I[Upload inventory]
 
 
-    A-->B
+    A-- log in -->B
     subgraph Merchant
         B-->H
         H-->I
