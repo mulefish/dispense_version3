@@ -53,6 +53,7 @@ def verdict(a, b, msg):
 
 def getUsers():
     users = {}
+    users["a"] = "a"
     users["kermitt"] = "Happy$100"
     users["Shabone"] = "bonny"
     users["Eeboo"] = "boo"

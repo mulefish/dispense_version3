@@ -55,7 +55,7 @@ def protected():
     #     "projectpath":"projectpath", 
     #     "kittycat":"kittycat"
     # }
-    return render_template('main.html', username=current_user.name)
+    return render_template('LoggedIn.html', username=current_user.name)
 
 
 @app.route('/')
