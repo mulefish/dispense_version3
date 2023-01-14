@@ -36,6 +36,7 @@ pmontgomery@FVFH51FAQ6LW bin % brew services stop postgresql
     subgraph Merchant
         B-->H
         H-->Inventory
+        Inventory-->DB
     end
     
     A-->D
