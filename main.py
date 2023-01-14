@@ -49,12 +49,6 @@ def login():
 @login_required
 def protected():
     cyan("protected")
-    # return 'Logged in as: ' + 
-    # message = { 
-    #     "status":"status",
-    #     "projectpath":"projectpath", 
-    #     "kittycat":"kittycat"
-    # }
     return render_template('LoggedIn.html', username=current_user.name)
 
 
@@ -69,7 +63,7 @@ def lulu():
 def logout():
     cyan("logged out")
     logout_user()
-    return 'Logged out'
+    return render_template('index.html')
 
 # Tell Flask-Login how to load a user
 @login_manager.user_loader
