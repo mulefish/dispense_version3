@@ -33,12 +33,24 @@ flowchart TB
     A[Splash page]
     B[Login]
     C[DB]
-    
+    D[Pick stores]
+    E[Pick products]
+    F[Money]
+    G[Tag]
+
+
 
     A-->B
-    subgraph one
+    subgraph
     B-->C
     end
     
+    A-->D
+    subgraph
+        D-->E
+        E-->F
+        F-->G
+    end
+
 
 ```
