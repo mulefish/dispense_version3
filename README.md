@@ -41,12 +41,12 @@ flowchart TB
 
 
     A-->B
-    subgraph
+    subgraph one
     B-->C
     end
     
     A-->D
-    subgraph
+    subgraph two
         D-->E
         E-->F
         F-->G
