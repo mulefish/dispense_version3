@@ -6,70 +6,54 @@ from common import yellow, cyan, log, green, getUsers
 app = Flask(__name__)
 login_manager = LoginManager(app)
 
-# Create a fake user class for example purposes
 class User(UserMixin):
     def __init__(self, id, password):
         self.id = id
-        self.name = id # // str(id)
+        self.name = id
         self.password = password
 users = {}
 
-# Create a user with the id 1
-#users["a"] = User("a")
-
-# Create a login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     cyan("login")
+
+    if not 'username' in request.form or 'password' not in request.form: 
+        yellow("reject")
+        return render_template('index_not_logged_in.html')
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         yellow( "{}   {}".format(username, password))
-        if username in users:
-            if password == users[username].password:
-                login_user(users[username])
+        if username in users and password == users[username].password:
+            login_user(users[username])
+            return redirect(url_for('merchant'))
+    return render_template('index_not_logged_in.html')
 
-                return redirect(url_for('protected'))
-            else:
-                print("username2: " + users[username].username) 
-                print("password2: " + users[username].password) 
-        else:
-            print("username is NOPE " + username )
-            print(users)
-    return '''
-        <form action="" method="post">
-            <p><input type=text name=username>
-            <p><input type=password name=password>
-            <p><input type=submit value=Login>
-            Hello
-        </form>
-    '''
-# Create a protected route
-@app.route('/protected')
+
+# The protected route
+@app.route('/merchant')
 @login_required
-def protected():
-    cyan("protected")
-    return render_template('LoggedIn.html', username=current_user.name)
+def merchant():
+    cyan("merchant")
+    return render_template('index_is_logged_in.html', username=current_user.name)
 
 
 @app.route('/')
 def lulu():
     cyan("index")
-    return render_template('index.html')
+    return render_template('index_not_logged_in.html')
 
 
-# Create a logout route
 @app.route('/logout')
 def logout():
     cyan("logged out")
     logout_user()
-    return render_template('index.html')
+    return render_template('index_not_logged_in.html')
 
-# Tell Flask-Login how to load a user
 @login_manager.user_loader
 def load_user(user_id):
     cyan("load_user")
-    # return users.get(int(user_id))
     return users.get(user_id)
 
 def setUsers():
