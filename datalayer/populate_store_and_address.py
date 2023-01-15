@@ -5,6 +5,7 @@ conn = sqlite3.connect('dispense.db')
 populate_store_and_address_data = [
     {
         "id":1,
+        "merchantId":1,
         "name": "Super Fresh",
         "street": "2145 NE Martin Luther King Jr Blvd",
         "city": "Portland",
@@ -18,6 +19,7 @@ populate_store_and_address_data = [
     },
     {
         "id":2,
+        "merchantId":1,
         "name": "Happy Market",
         "street": "823 SW Naito Pkwy",
         "city": "Portland",
@@ -32,6 +34,7 @@ populate_store_and_address_data = [
     },
     {
         "id":3,
+        "merchantId":2,
         "name": "Shoal Farms",
         "street": "427 NW Broadway",
         "city": "Portland",
@@ -46,6 +49,7 @@ populate_store_and_address_data = [
     },
     {
         "id":4,
+        "merchantId":2,
         "name": "Paper Jolt Cannabis",
         "street": "4011 SE Belmont St",
         "city": "Portland",
@@ -67,6 +71,7 @@ if __name__ == "__main__":
 
     table = """ CREATE TABLE stores (
             id INT,
+            merchantId INT,
             name VARCHAR(255),
             street VARCHAR(255),
             city VARCHAR(50),
@@ -83,8 +88,8 @@ if __name__ == "__main__":
     cursor.execute(table)
 
     for x in populate_store_and_address_data:
-        sql = "INSERT INTO {} VALUES ({}, '{}','{}','{}','{}','{}','{}','{}','{}', {}, {})".format(
-            TABLE_NAME, x["id"], x["name"], x["street"], x["city"], x["state"], x["zip"], x["url"], x["img"], x["phone"], x["lat"], x["long"])
+        sql = "INSERT INTO {} VALUES ({}, {}, '{}','{}','{}','{}','{}','{}','{}','{}', {}, {})".format(
+            TABLE_NAME, x["id"], x["merchantId"], x["name"], x["street"], x["city"], x["state"], x["zip"], x["url"], x["img"], x["phone"], x["lat"], x["long"])
         print( sql )
         cursor.execute(sql)
 
