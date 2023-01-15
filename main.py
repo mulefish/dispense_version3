@@ -3,10 +3,8 @@ from flask import Flask, redirect, url_for, request, render_template
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin, current_user
 from common import yellow, cyan, green # , getUsers
 import sqlite3
-import sys
-# sys.path.append('./datalayer')
-# from datalayer.logic_getMerchantStoreAndVendingInfo import getStoresInfo_ofAMerchant
-# from datalayer.logic_getMerchantStoreAndVendingInfo import getStoresInfo_ofAMerchant
+from datalayer.b import goat
+
 app = Flask(__name__)
 login_manager = LoginManager(app)
 
@@ -41,8 +39,8 @@ def login():
 @login_required
 def merchant():
     cyan("merchant")
-    n = current_user.name 
-    merchantId= user_ids[n]
+    username = current_user.name 
+    merchantId= user_ids[username]
 
     # storesAsJson = getStoresInfo_ofAMerchant(merchantId)
 
@@ -52,7 +50,7 @@ def merchant():
 
 
 
-    return render_template('index_is_logged_in.html', id=id, username=n)
+    return render_template('index_is_logged_in.html', id=merchantId, username=username)
 
 
 @app.route('/')

@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../')
 from common import yellow, cyan, log, yellow, green
-from populate_store_and_address import populate_store_and_address_data 
+# from populate_store_and_address import populate_store_and_address_data 
 import sqlite3
 import json
 from convertObjToJson import o2j
