@@ -1,7 +1,7 @@
 
 from flask import Flask, redirect, url_for, request, render_template
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin, current_user
-from common import yellow, cyan, log, green, getUsers
+from common import yellow, cyan #, log, green, getUsers
 import sqlite3
 
 app = Flask(__name__)
@@ -72,9 +72,7 @@ def setUsers():
         print(msg)
         users[username] = User(username, password) 
 
-
-
-
+    # LEFT OVER FOR PRE-Database time
     # u = getUsers()
     # for x in u:
     #     users[x] = User(x, u[x]) 
