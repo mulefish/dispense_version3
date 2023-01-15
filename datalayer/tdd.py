@@ -1,6 +1,6 @@
 import sys
 sys.path.append('../')
-from common import yellow, cyan, log, yellow, green
+from common import yellow, cyan, log, yellow, magenta, green
 from populate_store_and_address import populate_store_and_address_data 
 import sqlite3
 import json
@@ -143,7 +143,8 @@ def getQRCodeImage_test():
     
     verdict(isOk, True, "getQRCodeImage_test")
 
-
+def test_logic_getMerchantStoreAndVendingInfo(): 
+    magenta(" TODO! Test logic_getMerchantStoreAndVendingInfo")
 
 def init(): 
     check_the_shape_of_the_data()
@@ -152,5 +153,6 @@ def init():
     getQRCodeImage_test()
     select_from_flower_table()
     select_from_prerolls_table()
+    test_logic_getMerchantStoreAndVendingInfo()
 
 init()

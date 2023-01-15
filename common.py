@@ -26,6 +26,9 @@ BgMagenta = "\x1b[45m"
 BgCyan = "\x1b[46m"
 BgWhite = "\x1b[47m"
 
+def magenta(msg): 
+    x = "{}{}{}{}".format(BgMagenta, FgBlack, msg, Reset)
+    print(x)
 
 def yellow(msg):
     x = "{}{}{}{}".format(BgYellow, FgBlack, msg, Reset)

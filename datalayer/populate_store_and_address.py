@@ -4,7 +4,7 @@ conn = sqlite3.connect('dispense.db')
 
 populate_store_and_address_data = [
     {
-        "id":1,
+        "storeId":1,
         "merchantId":1,
         "name": "Super Fresh",
         "street": "2145 NE Martin Luther King Jr Blvd",
@@ -18,7 +18,7 @@ populate_store_and_address_data = [
         "long":-122.662000
     },
     {
-        "id":2,
+        "storeId":2,
         "merchantId":1,
         "name": "Happy Market",
         "street": "823 SW Naito Pkwy",
@@ -33,7 +33,7 @@ populate_store_and_address_data = [
 
     },
     {
-        "id":3,
+        "storeId":3,
         "merchantId":2,
         "name": "Shoal Farms",
         "street": "427 NW Broadway",
@@ -48,7 +48,7 @@ populate_store_and_address_data = [
 
     },
     {
-        "id":4,
+        "storeId":4,
         "merchantId":2,
         "name": "Paper Jolt Cannabis",
         "street": "4011 SE Belmont St",
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     cursor = conn.cursor()
 
     table = """ CREATE TABLE stores (
-            id INT,
+            storeId INT,
             merchantId INT,
             name VARCHAR(255),
             street VARCHAR(255),
@@ -89,8 +89,7 @@ if __name__ == "__main__":
 
     for x in populate_store_and_address_data:
         sql = "INSERT INTO {} VALUES ({}, {}, '{}','{}','{}','{}','{}','{}','{}','{}', {}, {})".format(
-            TABLE_NAME, x["id"], x["merchantId"], x["name"], x["street"], x["city"], x["state"], x["zip"], x["url"], x["img"], x["phone"], x["lat"], x["long"])
-        print( sql )
+            TABLE_NAME, x["storeId"], x["merchantId"], x["name"], x["street"], x["city"], x["state"], x["zip"], x["url"], x["img"], x["phone"], x["lat"], x["long"])
         cursor.execute(sql)
 
     print("Created the table '{}' and inserted {} rows into it".format(

@@ -1,9 +1,12 @@
 
 from flask import Flask, redirect, url_for, request, render_template
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin, current_user
-from common import yellow, cyan #, log, green, getUsers
+from common import yellow, cyan, green # , getUsers
 import sqlite3
-
+import sys
+# sys.path.append('./datalayer')
+# from datalayer.logic_getMerchantStoreAndVendingInfo import getStoresInfo_ofAMerchant
+# from datalayer.logic_getMerchantStoreAndVendingInfo import getStoresInfo_ofAMerchant
 app = Flask(__name__)
 login_manager = LoginManager(app)
 
@@ -13,6 +16,7 @@ class User(UserMixin):
         self.name = id
         self.password = password
 users = {}
+user_ids = {} 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -37,7 +41,18 @@ def login():
 @login_required
 def merchant():
     cyan("merchant")
-    return render_template('index_is_logged_in.html', username=current_user.name)
+    n = current_user.name 
+    merchantId= user_ids[n]
+
+    # storesAsJson = getStoresInfo_ofAMerchant(merchantId)
+
+    # # Store # 1 of Merchant # 1 
+    # print("storeId = {}".format( storesAsJson[0]["storeId"]))  
+    #@ vendingMachinesAsJson = getVendingMachines_ofAStore(merchantId, storeId)
+
+
+
+    return render_template('index_is_logged_in.html', id=id, username=n)
 
 
 @app.route('/')
@@ -58,7 +73,7 @@ def load_user(user_id):
     return users.get(user_id)
 
 def setUsers():
-
+    green("setUsers")
     conn = sqlite3.connect('datalayer/dispense.db')
     cursor = conn.cursor()
     sqlfetch = "select id, name, password  from merchants"; 
@@ -71,6 +86,7 @@ def setUsers():
         msg = f"{id} {username} {password}"
         print(msg)
         users[username] = User(username, password) 
+        user_ids[username] = id
 
     # LEFT OVER FOR PRE-Database time
     # u = getUsers()
@@ -80,6 +96,7 @@ def setUsers():
 
 if __name__ == '__main__':
     setUsers()
+
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.debug = True # REMOVE THIS ONCE IN PRODUCTION
