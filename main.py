@@ -2,6 +2,7 @@
 from flask import Flask, redirect, url_for, request, render_template
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin, current_user
 from common import yellow, cyan, log, green, getUsers
+import sqlite3
 
 app = Flask(__name__)
 login_manager = LoginManager(app)
@@ -57,10 +58,27 @@ def load_user(user_id):
     return users.get(user_id)
 
 def setUsers():
-    u = getUsers()
-    for x in u:
-        users[x] = User(x, u[x]) 
-    yellow("setUsers has {} many".format( len(users)))
+
+    conn = sqlite3.connect('datalayer/dispense.db')
+    cursor = conn.cursor()
+    sqlfetch = "select id, name, password  from merchants"; 
+    cursor.execute(sqlfetch)
+    row = cursor.fetchall()
+    for x in row:
+        id = x[0]
+        username = x[1]
+        password = x[2]
+        msg = f"{id} {username} {password}"
+        print(msg)
+        users[username] = User(username, password) 
+
+
+
+
+    # u = getUsers()
+    # for x in u:
+    #     users[x] = User(x, u[x]) 
+    # yellow("setUsers has {} many".format( len(users)))
 
 if __name__ == '__main__':
     setUsers()
