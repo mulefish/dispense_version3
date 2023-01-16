@@ -11,14 +11,10 @@
 headers/ -->
     <br/>
 
-{{stores}}
-<script>
-    const stores = JSON.parse('{{ stores | tojson }}') 
-    stores.forEach((store, i )=> { 
-        console.log( i = "  " + store[2])
-    })
+    <div id="stores">
+        I am the sotres node 2 
+    </div>
 
-</script>
 
 
 <br/>
@@ -32,4 +28,45 @@ headers/ -->
     // }
 </script>
 </body>
+
+
+<script>
+    // JSON of store info from DB for this merchant
+    const stores = JSON.parse('{{ stores | tojson }}') 
+    // // The column names from the table 'stores'
+    const store_keys = {
+        storeId : 0,  
+        merchantId: 1,
+        name : 2 ,
+        street :3,
+        city : 4,
+        state : 5,
+        zip :6,
+        url : 7,
+        img : 8 ,
+        phone : 9,
+        lat : 10 , 
+        long :11
+    }
+    // const t = "<table border='1'>"
+    // t += "<tr><th>store</th><th>merchantId</th><th>name</th></tr>"
+    stores.forEach((store, i )=> { 
+        console.log( store[store_keys['storeId']] )
+        console.log( store[store_keys['merchantId']] )
+        console.log( store[store_keys['name']] )
+        // console.log( store )
+        // t += "<tr>"
+        // t += "<td>" + store[store_keys["storeId"]] + "</td>"           
+        // t += "<td>" + store[store_keys["merchantId"]] + "</td>"           
+        // t += "<td>" + store[store_keys["name"]] + "</td>"           
+        // t += "</tr>"
+    })
+    // t += "</table>"
+    // document.getElementById("stores").innerHTML = t
+    console.log( t )
+    
+    document.getElementById("stores").innerHTML = " I amm a goat "
+</script>
+
+
 </html>
