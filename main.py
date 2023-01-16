@@ -48,13 +48,13 @@ def merchant():
     cursor.execute(sqlfetch)
     stores = cursor.fetchall()
 
-    # s = json.dumps( stores )
+    # asJson = json.dumps( stores )
 
-
+    # print( asJson )
     conn.close()
 
-
-    return render_template('index_is_logged_in.html', stores=stores, attempt=13, id=merchantId, username=username)
+    asJson = ["hello","there"]
+    return render_template('index_is_logged_in.html', stores=stores, attempt=14, id=merchantId, username=username)
 
 @app.route('/')
 def lulu():

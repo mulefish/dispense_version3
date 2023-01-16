@@ -9,6 +9,17 @@
     {% include "headers/isLoggedinHeader.html" %}
 <!-- LoggedIn.html
 headers/ -->
+    <br/>
+
+{{stores}}
+<script>
+    const stores = JSON.parse('{{ stores | tojson }}') 
+    stores.forEach((store, i )=> { 
+        console.log( i = "  " + store[2])
+    })
+
+</script>
+
 
 <br/>
 <script>
