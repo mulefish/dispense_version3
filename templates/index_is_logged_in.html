@@ -1,83 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Dispense</title>
-<link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
     {% include "headers/isLoggedinHeader.html" %}
-<!-- LoggedIn.html
-headers/ -->
-    <br/>
-
+    <br />
+    Merchant: {{merchantName}}
     <div id="stores">
-        I am the sotres node 2 
+
     </div>
+    <br />
+    <script>
+        function makeStoresTable() {
+            try {
+                // JSON of store info from DB for this merchant
+                const stores = JSON.parse('{{ stores | tojson }}')
+                // // The column names from the table 'stores'
+                const store_keys = {
+                    storeId: 0,
+                    merchantId: 1,
+                    name: 2,
+                    street: 3,
+                    city: 4,
+                    state: 5,
+                    zip: 6,
+                    url: 7,
+                    img: 8,
+                    phone: 9,
+                    lat: 10,
+                    long: 11
+                }
+                let t = "<table border='1'>"
+                t += "<tr><th>store</th><th>merchantId</th><th>name</th></tr>"
+                stores.forEach((store, i) => {
+                    t += "<tr>"
+                    t += "<td>" + store[store_keys["storeId"]] + "</td>"
+                    t += "<td>" + store[store_keys["merchantId"]] + "</td>"
+                    t += "<td>" + store[store_keys["name"]] + "</td>"
+                    t += "</tr>"
+                })
+                t += "</table>"
+                document.getElementById("stores").innerHTML = t
+            } catch (boom) {
+                alert(boom)
+            }
+        }
+    </script>
 
 
-
-<br/>
-<script>
-    // try { 
-    // const x = "{{ stores }}"
-    // const j = JSON.parse(x)
-    // alert(j)
-    // }catch ( boom ){ 
-    //     console.log( "BOOM " + boom.message() )
-    // }
-</script>
-
-
-
-<script>
-    function doit() { 
-        try { 
-
-        console.log("in it 2")
-
-
-    // JSON of store info from DB for this merchant
-    const stores = JSON.parse('{{ stores | tojson }}') 
-    // // The column names from the table 'stores'
-    const store_keys = {
-        storeId : 0,  
-        merchantId: 1,
-        name : 2 ,
-        street :3,
-        city : 4,
-        state : 5,
-        zip :6,
-        url : 7,
-        img : 8 ,
-        phone : 9,
-        lat : 10 , 
-        long :11
-    }
-    let t = "<table border='1'>"
-    t += "<tr><th>store</th><th>merchantId</th><th>name</th></tr>"
-    stores.forEach((store, i )=> { 
-        t += "<tr>"
-        t += "<td>" + store[store_keys["storeId"]] + "</td>"           
-        t += "<td>" + store[store_keys["merchantId"]] + "</td>"           
-        t += "<td>" + store[store_keys["name"]] + "</td>"           
-        t += "</tr>"
-    })
-    t += "</table>"
-    console.log( stores  )    
-    document.getElementById("stores").innerHTML = t
-} catch ( boom  ) { 
-    alert( boom )
-}
-}
-</script>
-
-
-<script>
-    console.log("start")
-doit()
-console.log("stop")
-</script>
+    <script>
+        makeStoresTable()
+    </script>
 </body>
 
 </html>

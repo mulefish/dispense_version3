@@ -41,10 +41,11 @@ def merchant():
     cyan("merchant")
     username = current_user.name 
     merchantId= user_ids[username]
+    green("username {} and merchantId {} " . format( username, merchantId ))
 
     conn = sqlite3.connect('datalayer/dispense.db')
     cursor = conn.cursor()
-    sqlfetch = "select * from stores where merchantId = 1;"; 
+    sqlfetch = f"select * from stores where merchantId = {merchantId};"; 
     cursor.execute(sqlfetch)
     stores = cursor.fetchall()
 
