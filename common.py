@@ -26,6 +26,12 @@ BgMagenta = "\x1b[45m"
 BgCyan = "\x1b[46m"
 BgWhite = "\x1b[47m"
 
+def o2j(list_of_objs):
+    j = json.dumps( list_of_objs )
+    return j 
+
+
+
 def magenta(msg): 
     x = "{}{}{}{}".format(BgMagenta, FgBlack, msg, Reset)
     print(x)

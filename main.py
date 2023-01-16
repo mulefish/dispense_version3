@@ -1,8 +1,9 @@
 
 from flask import Flask, redirect, url_for, request, render_template
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin, current_user
-from common import yellow, cyan, green # , getUsers
+from common import yellow, cyan, green, magenta # , getUsers
 import sqlite3
+import json
 from datalayer.b import goat
 
 app = Flask(__name__)
@@ -34,7 +35,6 @@ def login():
     return render_template('index_not_logged_in.html')
 
 
-# The protected route
 @app.route('/merchant')
 @login_required
 def merchant():
@@ -42,16 +42,19 @@ def merchant():
     username = current_user.name 
     merchantId= user_ids[username]
 
-    # storesAsJson = getStoresInfo_ofAMerchant(merchantId)
+    conn = sqlite3.connect('datalayer/dispense.db')
+    cursor = conn.cursor()
+    sqlfetch = "select * from stores where merchantId = 1;"; 
+    cursor.execute(sqlfetch)
+    stores = cursor.fetchall()
 
-    # # Store # 1 of Merchant # 1 
-    # print("storeId = {}".format( storesAsJson[0]["storeId"]))  
-    #@ vendingMachinesAsJson = getVendingMachines_ofAStore(merchantId, storeId)
+    # s = json.dumps( stores )
 
 
+    conn.close()
 
-    return render_template('index_is_logged_in.html', id=merchantId, username=username)
 
+    return render_template('index_is_logged_in.html', stores=stores, attempt=13, id=merchantId, username=username)
 
 @app.route('/')
 def lulu():
@@ -85,12 +88,7 @@ def setUsers():
         print(msg)
         users[username] = User(username, password) 
         user_ids[username] = id
-
-    # LEFT OVER FOR PRE-Database time
-    # u = getUsers()
-    # for x in u:
-    #     users[x] = User(x, u[x]) 
-    # yellow("setUsers has {} many".format( len(users)))
+    conn.close()
 
 if __name__ == '__main__':
     setUsers()
