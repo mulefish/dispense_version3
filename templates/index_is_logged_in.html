@@ -11,9 +11,10 @@
     {% include "headers/isLoggedinHeader.html" %}
     <br />
     Merchant: {{merchantName}}
-    <div id="stores">
-
-    </div>
+    <div id="stores">    </div>
+    <br/>
+    Store Vending Machines:
+    <div id="vending_machines"></div>
     <br />
     <script>
         function makeStoresTable() {
@@ -52,11 +53,46 @@
                 alert(boom)
             }
         }
+
+
+
+        function makeVeningMachineTable() {
+            try { 
+            const vending_machines = JSON.parse('{{ vending_machines | tojson }}')
+
+                // // The column names from the table 'stores'
+                const vending_machine_keys = {
+                    id: 0,
+                    merchantId: 1,
+                    storeId: 2,
+                    version: 3
+                }
+                let t = "<table border='1'>"
+                t += "<tr><th>vendingId</th><th>merchantId</th><th>storeId</th><th>version</th></tr>"
+                vending_machines.forEach((vending, i) => {
+                    t += "<tr>"
+                    t += "<td>" + vending[vending_machine_keys["vendingId"]] + "</td>"
+                    t += "<td>" + vending[vending_machine_keys["merchantId"]] + "</td>"
+                    t += "<td>" + vending[vending_machine_keys["storeId"]] + "</td>"
+                    t += "<td>" + vending[vending_machine_keys["version"]] + "</td>"
+                    t += "</tr>"
+                })
+                t += "</table>"
+                document.getElementById("vending_machines").innerHTML = t
+            } catch (boom) {
+                alert(boom)
+            }
+
+        }
+
+
+
     </script>
 
 
     <script>
         makeStoresTable()
+        makeVeningMachineTable() 
     </script>
 </body>
 
