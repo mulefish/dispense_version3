@@ -19,6 +19,7 @@
         function makeStoresTable() {
             try {
                 // JSON of store info from DB for this merchant
+                const merchantName = '{{merchantName}}'
                 const stores = JSON.parse('{{ stores | tojson }}')
                 // // The column names from the table 'stores'
                 const store_keys = {
@@ -36,11 +37,12 @@
                     long: 11
                 }
                 let t = "<table border='1'>"
-                t += "<tr><th>store</th><th>merchantId</th><th>name</th></tr>"
+                t += "<tr><th>store</th><th>merchantId</th><th>merchant</th><th>name</th></tr>"
                 stores.forEach((store, i) => {
                     t += "<tr>"
                     t += "<td>" + store[store_keys["storeId"]] + "</td>"
                     t += "<td>" + store[store_keys["merchantId"]] + "</td>"
+                    t += "<td>" + merchantName + "</td>"
                     t += "<td>" + store[store_keys["name"]] + "</td>"
                     t += "</tr>"
                 })
