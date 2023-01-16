@@ -27,10 +27,16 @@ headers/ -->
     //     console.log( "BOOM " + boom.message() )
     // }
 </script>
-</body>
+
 
 
 <script>
+    function doit() { 
+        try { 
+
+        console.log("in it 2")
+
+
     // JSON of store info from DB for this merchant
     const stores = JSON.parse('{{ stores | tojson }}') 
     // // The column names from the table 'stores'
@@ -48,25 +54,30 @@ headers/ -->
         lat : 10 , 
         long :11
     }
-    // const t = "<table border='1'>"
-    // t += "<tr><th>store</th><th>merchantId</th><th>name</th></tr>"
+    let t = "<table border='1'>"
+    t += "<tr><th>store</th><th>merchantId</th><th>name</th></tr>"
     stores.forEach((store, i )=> { 
-        console.log( store[store_keys['storeId']] )
-        console.log( store[store_keys['merchantId']] )
-        console.log( store[store_keys['name']] )
-        // console.log( store )
-        // t += "<tr>"
-        // t += "<td>" + store[store_keys["storeId"]] + "</td>"           
-        // t += "<td>" + store[store_keys["merchantId"]] + "</td>"           
-        // t += "<td>" + store[store_keys["name"]] + "</td>"           
-        // t += "</tr>"
+        t += "<tr>"
+        t += "<td>" + store[store_keys["storeId"]] + "</td>"           
+        t += "<td>" + store[store_keys["merchantId"]] + "</td>"           
+        t += "<td>" + store[store_keys["name"]] + "</td>"           
+        t += "</tr>"
     })
-    // t += "</table>"
-    // document.getElementById("stores").innerHTML = t
-    console.log( t )
-    
-    document.getElementById("stores").innerHTML = " I amm a goat "
+    t += "</table>"
+    console.log( stores  )    
+    document.getElementById("stores").innerHTML = t
+} catch ( boom  ) { 
+    alert( boom )
+}
+}
 </script>
 
+
+<script>
+    console.log("start")
+doit()
+console.log("stop")
+</script>
+</body>
 
 </html>
