@@ -55,7 +55,7 @@ def merchant():
     conn.close()
 
     asJson = ["hello","there"]
-    return render_template('index_is_logged_in.html', stores=stores, attempt=14, id=merchantId, username=username)
+    return render_template('index_is_logged_in.html', merchantName=username, stores=stores, attempt=14, id=merchantId, username=username)
 
 @app.route('/')
 def lulu():
