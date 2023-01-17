@@ -26,6 +26,25 @@ def getVendingMachines_ofAStore(merchantId, storeId):
 
     return o2j(list_of_just_one_row)
 
+def getVendingFlowers_ofAStore(merchantId, storeId): 
+    cursor = conn.cursor()
+    query1 = f"select * from vending_flowers where merchantId = {merchantId} and storeId  = {storeId} ; "
+    cursor.execute(query1)
+    list_of_just_one_row = cursor.fetchall()
+
+    return o2j(list_of_just_one_row)
+
+
+def getVendingPrerolls_ofAStore(merchantId, storeId): 
+    cursor = conn.cursor()
+    query1 = f"select * from vending_prerolls where merchantId = {merchantId} and storeId  = {storeId} ; "
+    cursor.execute(query1)
+    list_of_just_one_row = cursor.fetchall()
+
+    return o2j(list_of_just_one_row)
+
+
+
 
 if __name__ == "__main__":
     # Merchant # 1 
@@ -37,4 +56,7 @@ if __name__ == "__main__":
     vendingMachines = getVendingMachines_ofAStore(merchantId, storeId)
 
 
-    print( vendingMachines )
+    flowers = getVendingFlowers_ofAStore(merchantId, storeId)
+    prerolls = getVendingPrerolls_ofAStore(merchantId, storeId)
+
+    print( prerolls )

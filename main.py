@@ -55,11 +55,25 @@ def merchant():
     cursor.execute(sqlfetch)
     vending_machines = cursor.fetchall()
     # print(vending_machines )
+
+
+    sqlfetch = f"select * from vending_flowers where merchantId = {merchantId};"; 
+    cursor.execute(sqlfetch)
+    vending_flowers = cursor.fetchall()
+    # print(vending_machines )
+    
+    sqlfetch = f"select * from vending_flowers where merchantId = {merchantId};"; 
+    cursor.execute(sqlfetch)
+    vending_prerolls = cursor.fetchall()
+    # print(vending_machines )
     conn.close()
+
+
+
 
     green("vending_machines")
     print(vending_machines)
-    return render_template('index_is_logged_in.html', merchantName=username,vending_machines=vending_machines,  stores=stores, attempt=14, id=merchantId, username=username)
+    return render_template('index_is_logged_in.html', vending_flowers=vending_flowers,  vending_prerolls=vending_prerolls, merchantName=username,vending_machines=vending_machines,  stores=stores, attempt=14, id=merchantId, username=username)
 
 @app.route('/')
 def lulu():
