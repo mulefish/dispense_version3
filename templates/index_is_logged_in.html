@@ -16,6 +16,10 @@
     Store Vending Machines:
     <div id="vending_machines"></div>
     <br />
+    Vending Flowers: 
+    <div id="vending_flowers"></div>
+    <br />
+
     <script>
         function makeStoresTable() {
             try {
@@ -83,7 +87,47 @@
 
         }
 
+        function makeFlowerTables() { 
+            try {
+                const vending_flowers = JSON.parse('{{ vending_flowers | tojson }}')
+                const vending_flowers_keys = {
+                    "vendingId":0,
+                    "merchantId":1,
+                    "storeId": 2,
+                    "strain": 3,
+                    "type": 4,
+                    "farm": 5,
+                    "weight_in_grams": 6,
+                    "thc_percent": 7,
+                    "cbd_percent": 8,
+                    "harvest": 9,
+                    "description": 10,
+                    "price": 11,
 
+                }
+                let t = "<table border='1'>"
+                t += "<tr><th>vId</th><th>strain</th><th>type</th><th>farm</th><th>grams</th><th>thc</th><th>cbd</th><th>harvest</th><th>description</th><th>price</th></tr>"
+                vending_flowers.forEach((vf, i) => {
+                    t += "<tr>"
+                        t += "<td>" + vf[vending_flowers_keys["vendingId"]] + "</td>"
+                    t += "<td>" + vf[vending_flowers_keys["strain"]] + "</td>"
+                    t += "<td>" + vf[vending_flowers_keys["type"]] + "</td>"
+                    t += "<td>" + vf[vending_flowers_keys["farm"]] + "</td>"
+                    t += "<td class='num'>" + vf[vending_flowers_keys["weight_in_grams"]] + "</td>"
+                    t += "<td class='num'>" + vf[vending_flowers_keys["thc_percent"]] + "</td>"
+                    t += "<td class='num'>" + vf[vending_flowers_keys["cbd_percent"]] + "</td>"
+                    t += "<td>" + vf[vending_flowers_keys["harvest"]] + "</td>"
+                    t += "<td>" + vf[vending_flowers_keys["description"]] + "</td>"
+                    t += "<td class='num'>" + vf[vending_flowers_keys["price"]] + "</td>"
+
+                    t += "</tr>"
+                })
+                t += "</table>"
+                document.getElementById("vending_flowers").innerHTML = t
+            } catch (boom) {
+                alert(boom)
+            }
+        }
 
     </script>
 
@@ -91,6 +135,7 @@
     <script>
         makeStoresTable()
         makeVeningMachineTable() 
+        makeFlowerTables() 
     </script>
 </body>
 
