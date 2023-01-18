@@ -20,7 +20,26 @@
     <div id="vending_flowers"></div>
     <br />
 
+<style>
+    label {
+    display: inline-block;
+    background: #ddd;
+    border: 1px outset #ccc;
+    border-radius: .3em;
+    padding: .3em 1em;
+    margin: .5em;
+}
+
+label:active {
+  border-style: inset;
+}
+</style>
+    <label>
+        Upload
+        <input type="file" >
+      </label>
     <script>
+
         function makeStoresTable() {
             try {
                 // JSON of store info from DB for this merchant

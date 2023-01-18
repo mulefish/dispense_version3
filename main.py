@@ -56,7 +56,6 @@ def merchant():
     vending_machines = cursor.fetchall()
     # print(vending_machines )
 
-
     sqlfetch = f"select * from vending_flowers where merchantId = {merchantId};"; 
     cursor.execute(sqlfetch)
     vending_flowers = cursor.fetchall()
@@ -67,9 +66,6 @@ def merchant():
     vending_prerolls = cursor.fetchall()
     # print(vending_machines )
     conn.close()
-
-
-
 
     green("vending_machines")
     print(vending_machines)
@@ -115,8 +111,8 @@ if __name__ == '__main__':
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.debug = True # REMOVE THIS ONCE IN PRODUCTION
-    cyan("http://34.83.236.108:4040 with database at data/dispense.db")
-    cyan("http://localhost:4040 with database at data/dispense.db")
+    cyan("http://34.82.219.228:8080 with database at data/dispense.db")
+    # cyan("http://localhost:4040 with database at data/dispense.db")
 
     from waitress import serve
-    serve(app, host="0.0.0.0", port=4040)
+    serve(app, host="0.0.0.0", port=8080)
