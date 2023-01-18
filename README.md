@@ -8,7 +8,7 @@ Postgres? Currently focusing on SQLite, because it is a easier. Later TODO: Port
 pmontgomery@FVFH51FAQ6LW bin % brew services stop postgresql
 #(base) pmontgomery@FVFH51FAQ6LW bin % brew services start postgresql
 #(base) pmontgomery@FVFH51FAQ6LW bin % psql -U pmontgomery -H
-
+ 
 # DB TODO: 
 1 - settle on a DB schema 
 2 - Get more solid on Google Cloud DB 
