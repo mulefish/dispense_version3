@@ -15,6 +15,7 @@ flower_data = [
         "harvest": "10/22/19",
         "description": "Indoor/outdoor terpenes",
         "price": 12.00,
+        "count":10
     },
     {
         "vendingId":1,
@@ -29,6 +30,7 @@ flower_data = [
         "harvest": "11/05/19",
         "description": "Indoor/outdoor terpenes",
         "price": 11.00,
+        "count":10
     },
     {
         "vendingId":1,
@@ -43,6 +45,7 @@ flower_data = [
         "harvest": "11/14/19",
         "description": "Indoor/outdoor terpenes",
         "price": 8.00,
+        "count":10
     },
     {
         "vendingId":1,
@@ -57,6 +60,7 @@ flower_data = [
         "harvest": "10/21/19",
         "description": "Indoor/outdoor terpenes",
         "price": 10.00,
+        "count":10
     },    {
         "vendingId":1,
         "merchantId":1,
@@ -70,6 +74,7 @@ flower_data = [
         "harvest": "11/05/19",
         "description": "Indoor/outdoor terpenes",
         "price": 9.00,
+        "count":10
     },    
     ###
     {
@@ -85,6 +90,7 @@ flower_data = [
         "harvest": "10/22/19",
         "description": "Indoor/outdoor terpenes",
         "price": 12.00,
+        "count":10
     },
     {
         "vendingId":2,
@@ -99,6 +105,7 @@ flower_data = [
         "harvest": "11/05/19",
         "description": "Indoor/outdoor terpenes",
         "price": 11.00,
+        "count":10
     },
     {
         "vendingId":2,
@@ -113,6 +120,7 @@ flower_data = [
         "harvest": "11/14/19",
         "description": "Indoor/outdoor terpenes",
         "price": 8.00,
+        "count":10
     },
     {
         "vendingId":2,
@@ -127,6 +135,7 @@ flower_data = [
         "harvest": "10/21/19",
         "description": "Indoor/outdoor terpenes",
         "price": 10.00,
+        "count":10
     },    
     {
         "vendingId":2,
@@ -141,6 +150,7 @@ flower_data = [
         "harvest": "11/05/19",
         "description": "Indoor/outdoor terpenes",
         "price": 9.00,
+        "count":10
     },
     ###  
         {
@@ -156,6 +166,7 @@ flower_data = [
         "harvest": "10/22/19",
         "description": "Indoor/outdoor terpenes",
         "price": 12.00,
+        "count":10
     },
     {
         "vendingId":3,
@@ -170,6 +181,7 @@ flower_data = [
         "harvest": "11/05/19",
         "description": "Indoor/outdoor terpenes",
         "price": 11.00,
+        "count":10
     },
     {
         "vendingId":3,
@@ -184,6 +196,7 @@ flower_data = [
         "harvest": "11/14/19",
         "description": "Indoor/outdoor terpenes",
         "price": 8.00,
+        "count":10
     },
     {
         "vendingId":3,
@@ -198,6 +211,7 @@ flower_data = [
         "harvest": "10/21/19",
         "description": "Indoor/outdoor terpenes",
         "price": 10.00,
+        "count":10
     },    {
         "vendingId":3,
         "merchantId":1,
@@ -211,6 +225,7 @@ flower_data = [
         "harvest": "11/05/19",
         "description": "Indoor/outdoor terpenes",
         "price": 9.00,
+        "count":10
     },
         ###  
         {
@@ -226,6 +241,7 @@ flower_data = [
         "harvest": "10/22/19",
         "description": "Indoor/outdoor terpenes",
         "price": 12.00,
+        "count":10
     },
     {
         "vendingId":4,
@@ -240,6 +256,7 @@ flower_data = [
         "harvest": "11/05/19",
         "description": "Indoor/outdoor terpenes",
         "price": 11.00,
+        "count":10
     },
     {
         "vendingId":4,
@@ -254,6 +271,7 @@ flower_data = [
         "harvest": "11/14/19",
         "description": "Indoor/outdoor terpenes",
         "price": 8.00,
+        "count":10
     },
     {
         "vendingId":4,
@@ -268,6 +286,7 @@ flower_data = [
         "harvest": "10/21/19",
         "description": "Indoor/outdoor terpenes",
         "price": 10.00,
+        "count":10
     },    {
         "vendingId":4,
         "merchantId":2,
@@ -281,6 +300,7 @@ flower_data = [
         "harvest": "11/05/19",
         "description": "Indoor/outdoor terpenes",
         "price": 9.00,
+        "count":10
     },
             ###  
         {
@@ -296,6 +316,7 @@ flower_data = [
         "harvest": "10/22/19",
         "description": "Indoor/outdoor terpenes",
         "price": 12.00,
+        "count":10
     },
     {
         "vendingId":5,
@@ -310,6 +331,7 @@ flower_data = [
         "harvest": "11/05/19",
         "description": "Indoor/outdoor terpenes",
         "price": 11.00,
+        "count":10
     },
     {
         "vendingId":5,
@@ -324,6 +346,7 @@ flower_data = [
         "harvest": "11/14/19",
         "description": "Indoor/outdoor terpenes",
         "price": 8.00,
+        "count":10
     },
     {
         "vendingId":5,
@@ -338,6 +361,7 @@ flower_data = [
         "harvest": "10/21/19",
         "description": "Indoor/outdoor terpenes",
         "price": 10.00,
+        "count":11
     },    {
         "vendingId":5,
         "merchantId":2,
@@ -351,6 +375,7 @@ flower_data = [
         "harvest": "11/05/19",
         "description": "Indoor/outdoor terpenes",
         "price": 9.00,
+        "count":9
     }
 
 
@@ -374,7 +399,8 @@ if __name__ == "__main__":
             cbd_percent REAL,
             harvest VARCHAR(9),
             description VARCHAR(255),
-            price REAL
+            price REAL,
+            count INT
         ); """
 
     cursor.execute("DROP TABLE IF EXISTS {}".format(TABLE_NAME))
@@ -382,8 +408,8 @@ if __name__ == "__main__":
     
 
     for x in flower_data:
-        sql = "INSERT INTO {} VALUES ({},{},{}, '{}','{}','{}','{}','{}','{}','{}','{}', {})".format(
-            TABLE_NAME, x["vendingId"], x["merchantId"], x["storeId"], x["strain"], x["type"], x["farm"], x["weight_in_grams"], x["thc_percent"], x["cbd_percent"], x["harvest"], x["description"], x["price"])
+        sql = "INSERT INTO {} VALUES ({},{},{}, '{}','{}','{}','{}','{}','{}','{}','{}', {},{})".format(
+            TABLE_NAME, x["vendingId"], x["merchantId"], x["storeId"], x["strain"], x["type"], x["farm"], x["weight_in_grams"], x["thc_percent"], x["cbd_percent"], x["harvest"], x["description"], x["price"], x["count"])
         cursor.execute(sql)
 
     print("Created the table '{}' and inserted {} rows into it".format(

@@ -103,10 +103,10 @@
                     "harvest": 9,
                     "description": 10,
                     "price": 11,
-
+                    "count":12
                 }
                 let t = "<table border='1'>"
-                t += "<tr><th>vId</th><th>strain</th><th>type</th><th>farm</th><th>grams</th><th>thc</th><th>cbd</th><th>harvest</th><th>description</th><th>price</th></tr>"
+                t += "<tr><th>vId</th><th>strain</th><th>type</th><th>farm</th><th>grams</th><th>thc</th><th>cbd</th><th>harvest</th><th>description</th><th>price</th><th>count</th></tr>"
                 vending_flowers.forEach((vf, i) => {
                     t += "<tr>"
                         t += "<td>" + vf[vending_flowers_keys["vendingId"]] + "</td>"
@@ -119,7 +119,9 @@
                     t += "<td>" + vf[vending_flowers_keys["harvest"]] + "</td>"
                     t += "<td>" + vf[vending_flowers_keys["description"]] + "</td>"
                     t += "<td class='num'>" + vf[vending_flowers_keys["price"]] + "</td>"
-
+                    const count = vf[vending_flowers_keys["count"]]
+                    t += `<td > <input class='num2' type="number" step="1" value='${count}' /></td>`
+                    
                     t += "</tr>"
                 })
                 t += "</table>"
