@@ -4,7 +4,9 @@ from flask_login import LoginManager, login_user, logout_user, login_required, U
 from common import yellow, cyan, green, magenta # , getUsers
 import sqlite3
 import json
-from datalayer.b import goat
+from datalayer.do_selects import do_select
+from flask import jsonify
+# from datalayer.b import goat
 
 app = Flask(__name__)
 login_manager = LoginManager(app)
@@ -81,8 +83,34 @@ def lulu():
 @login_required
 def vending():
     username = current_user.name 
-    cyan("vending {}".format(username))
+    cyan("vending {}".format(username))    
     return render_template('vending.html', username=username )
+
+@app.route('/get_vending_machine', methods=['POST'])
+def get_vending_machine():
+    cyan("get_vending_machine")
+
+    obj = {
+        "status":"Missing information"
+    }
+    if request.method == 'POST':
+        x = request.get_json()
+        if "storeId" in x and "merchantId" in x and "vendingId" in x:
+            vendingId = x["vendingId"]
+            storeId = x["storeId"]
+            merchantId = x["merchantId"]
+            #query = "select * from vending_flowers where vendingId = {} and merchantId = {} and storeId = {}".format(vendingId, merchantId, storeId)
+            query = "select * from vending_flowers where vendingId = 1 and merchantId = 1 and storeId = 1"
+            obj["query"] = query
+            obj["status"] = "OK"
+            obj["data"] = do_select(query)
+    else:
+        obj["status"] = "Incorrect HTTP verb"
+
+    return jsonify(obj)
+    
+
+
 
 
 

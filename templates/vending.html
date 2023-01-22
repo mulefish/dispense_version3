@@ -10,15 +10,9 @@
 <body>
     {% include "headers/isLoggedinHeader.html" %}
     <br />
-    Merchant: {{merchantName}}
-    <div id="stores"> </div>
-    <br />
-    Store Vending Machines:
-    <div id="vending_machines"></div>
-    <br />
-    Vending Flowers: 
-    <div id="vending_flowers"></div>
-    <br />
+    <div id="machine">
+
+    </div>
 
 <style>
     label {
@@ -41,6 +35,16 @@ label:active {
 
     <script>
 
+        function populate_machine() { 
+            const rows = ["A", "B", "C", "D", "E"] // down
+            const cols = ["1", "2", "3", "4", "5"] // across
+            
+
+
+
+        }
+
+        populate_machine() 
     </script>
 </body>
 
