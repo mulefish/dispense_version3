@@ -77,6 +77,15 @@ def lulu():
     return render_template('index_not_logged_in.html')
 
 
+@app.route('/vending')
+@login_required
+def vending():
+    username = current_user.name 
+    cyan("vending {}".format(username))
+    return render_template('vending.html', username=username )
+
+
+
 @app.route('/logout')
 def logout():
     cyan("logged out")

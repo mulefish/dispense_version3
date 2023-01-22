@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dispense</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    {% include "headers/isLoggedinHeader.html" %}
+    <br />
+    Merchant: {{merchantName}}
+    <div id="stores"> </div>
+    <br />
+    Store Vending Machines:
+    <div id="vending_machines"></div>
+    <br />
+    Vending Flowers: 
+    <div id="vending_flowers"></div>
+    <br />
+
+<style>
+    label {
+    display: inline-block;
+    background: #ddd;
+    border: 1px outset #ccc;
+    border-radius: .3em;
+    padding: .3em 1em;
+    margin: .5em;
+}
+
+label:active {
+  border-style: inset;
+}
+</style>
+    <label>
+    
+    </label>
+    VENDING
+
+    <script>
+
+    </script>
+</body>
+
+</html>
