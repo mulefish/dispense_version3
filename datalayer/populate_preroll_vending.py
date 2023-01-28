@@ -16,7 +16,8 @@ preroll_data = [
         "cbd_percent": 0.20,
         "harvest": "12/13/18",
         "description": "",
-        "price": "25.00"
+        "price": "25.00",
+        "product":"preroll"
     },
     {
         "vendingId": 1,
@@ -30,7 +31,9 @@ preroll_data = [
         "cbd_percent": 0.03,
         "harvest": "08/08/18",
         "description": "",
-        "price": "25.00"
+        "price": "25.00",
+                "product":"preroll"
+
     },
     #
         {
@@ -45,7 +48,9 @@ preroll_data = [
         "cbd_percent": 0.20,
         "harvest": "12/13/18",
         "description": "",
-        "price": "25.00"
+        "price": "25.00",
+                "product":"preroll"
+
     },
     {
         "vendingId": 2,
@@ -59,7 +64,9 @@ preroll_data = [
         "cbd_percent": 0.03,
         "harvest": "08/08/18",
         "description": "",
-        "price": "25.00"
+        "price": "25.00",
+                "product":"preroll"
+
     },
     #
         {
@@ -74,7 +81,9 @@ preroll_data = [
         "cbd_percent": 0.20,
         "harvest": "12/13/18",
         "description": "",
-        "price": "25.00"
+        "price": "25.00",
+                "product":"preroll"
+
     },
     {
         "vendingId": 2,
@@ -88,9 +97,11 @@ preroll_data = [
         "cbd_percent": 0.03,
         "harvest": "08/08/18",
         "description": "",
-        "price": "25.00"
+        "price": "25.00",
+                "product":"preroll"
+
     },
-    #
+    
             {
         "vendingId": 3,
         "merchantId": 1,
@@ -103,7 +114,9 @@ preroll_data = [
         "cbd_percent": 0.20,
         "harvest": "12/13/18",
         "description": "",
-        "price": "25.00"
+        "price": "25.00",
+                "product":"preroll"
+
     },
     {
         "vendingId": 3,
@@ -117,7 +130,9 @@ preroll_data = [
         "cbd_percent": 0.03,
         "harvest": "08/08/18",
         "description": "",
-        "price": "25.00"
+        "price": "25.00",
+                "product":"preroll"
+
     },
 
 ]
@@ -139,15 +154,17 @@ if __name__ == "__main__":
         cbd_percent REAL,
         harvest VARCHAR(9),
         description VARCHAR(255),
-        price REAL
+        price REAL,
+        product VARCHAR(20)
+
         ); """
 
     cursor.execute("DROP TABLE IF EXISTS {}".format(TABLE_NAME))
     cursor.execute(table)
 
     for x in preroll_data:
-        sql = "INSERT INTO {} VALUES ({},{},{},'{}', '{}','{}', {}, {}, {},'{}','{}',{})".format(
-            TABLE_NAME, x["vendingId"], x["merchantId"], x["storeId"], x["brand"], x["type"], x["strain"], x["number_of_joints"], x["thc_percent"], x["cbd_percent"], x["harvest"], x["description"], x["price"])
+        sql = "INSERT INTO {} VALUES ({},{},{},'{}', '{}','{}', {}, {}, {},'{}','{}',{}, '{}')".format(
+            TABLE_NAME, x["vendingId"], x["merchantId"], x["storeId"], x["brand"], x["type"], x["strain"], x["number_of_joints"], x["thc_percent"], x["cbd_percent"], x["harvest"], x["description"], x["price"], x['product'])
         # yellow(sql)
         cursor.execute(sql)
 
