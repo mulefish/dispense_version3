@@ -41,7 +41,57 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close" onClick="closeTheModals()">&times;</span>
-            <p>VENDING</p>
+            <p>ADD A VENDING MACHINE</p>
+            <table border="1">
+                <tr>
+                    <td>vendingId</td>
+                    <td><input type="text" value="" id="newVendingId"></td>
+                </tr>                    
+                <tr>
+                    <td>merchant</td>
+                    <td><input type="text" value="{{merchant}}" disabled=true id="newVendingMerchantId"></td>
+                </tr>
+
+                <tr>
+                    <td>storeId</td>
+                    <td><input type="text" value="" id="newVendingStoreId"></td>
+                </tr>
+                <tr>
+                    <td>version</td>
+                    <td><input type="text" value="" id="newVendingVersion"></td>
+                </tr>
+
+
+            </table>
+            <button onClick="discardNewVendingMachine()">Discard</button>
+            <button onClick="saveNewVendingMachine()">Save</button>
+            <script>
+                function saveNewVendingMachine() { 
+                    const newVendingId = document.getElementById("newVendingId").value
+                     const newVendingMerchantId = document.getElementById("newVendingMerchantId").value
+                     const newVendingStoreId = document.getElementById("newVendingStoreId").value
+                     const newVendingVersion = document.getElementById("newVendingVersion").value
+
+                    const newInfo = {
+                        newVendingId,
+                        newVendingMerchantId,
+                        newVendingStoreId,
+                        newVendingVersion
+                    }
+
+                }
+
+                function discardNewVendingMachine() { 
+                    document.getElementById("newVendingId").value=""
+                    document.getElementById("newVendingMerchantId").value=""
+                    document.getElementById("newVendingStoreId").value=""
+                    document.getElementById("newVendingVersion").value=""
+                }
+
+
+            </script>
+
+
         </div>
 
     </div>
