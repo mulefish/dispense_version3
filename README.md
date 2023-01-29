@@ -1,3 +1,11 @@
+
+# Current TODO: 
+1: Prerolls ADD AND DELETE  
+2: FLOWERS DELETE  
+3: VENDING DELETE  
+4: VENDiNG ROW AND COLUMN  
+5: Bounds checking on the forms ( some fields need to be numbers ) 
+
 # dispense_version3
 https://github.com/mulefish/dispense_version3
 
