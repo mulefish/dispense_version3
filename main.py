@@ -45,29 +45,35 @@ def merchant():
     merchantId= user_ids[username]
     green("username {} and merchantId {} " . format( username, merchantId ))
 
-    conn = sqlite3.connect('datalayer/dispense.db')
-    cursor = conn.cursor()
+    # conn = sqlite3.connect('datalayer/dispense.db')
+    # cursor = conn.cursor()
     sqlfetch = f"select * from stores where merchantId = {merchantId};"; 
-    cursor.execute(sqlfetch)
-    stores = cursor.fetchall()
+    # cursor.execute(sqlfetch)
+    # stores = cursor.fetchall()
+    # dino 
+    stores = do_select(sqlfetch)
     #print(stores)
     ###
 
     sqlfetch = f"select * from vending_machines where merchantId = {merchantId};"; 
-    cursor.execute(sqlfetch)
-    vending_machines = cursor.fetchall()
+    # cursor.execute(sqlfetch)
+    # vending_machines = cursor.fetchall()
+    vending_machines = do_select(sqlfetch)
     # print(vending_machines )
 
     sqlfetch = f"select * from vending_flowers where merchantId = {merchantId};"; 
-    cursor.execute(sqlfetch)
-    vending_flowers = cursor.fetchall()
+    # cursor.execute(sqlfetch)
+    # vending_flowers = cursor.fetchall()
+    vending_flowers = do_select(sqlfetch)
     # print(vending_machines )
     
     sqlfetch = f"select * from vending_prerolls where merchantId = {merchantId};"; 
-    cursor.execute(sqlfetch)
-    vending_prerolls = cursor.fetchall()
+
+    # cursor.execute(sqlfetch)
+    # vending_prerolls = cursor.fetchall()
     # print(vending_machines )
-    conn.close()
+    vending_prerolls = do_select(sqlfetch)
+    # conn.close()
 
     green("vending_machines")
     print(vending_machines)
@@ -79,12 +85,13 @@ def lulu():
     return render_template('index_not_logged_in.html')
 
 
-@app.route('/vending')
+@app.route('/inventory_by_machine')
 @login_required
-def vending():
+def inventory_by_machine():
     username = current_user.name 
-    cyan("vending {}".format(username))    
-    return render_template('vending.html', username=username )
+    cyan("inventory_by_machine {}".format(username))    
+    # finch 
+    return render_template('inventory_by_machine.html', username=username )
 
 @app.route('/get_vending_machine', methods=['POST'])
 def get_vending_machine():
@@ -101,14 +108,16 @@ def get_vending_machine():
             merchantId = x["merchantId"]
             print("v={} s={} m={}".format( vendingId, storeId, merchantId ))
             #query = "select * from vending_flowers where vendingId = {} and merchantId = {} and storeId = {}".format(vendingId, merchantId, storeId)
-            query = "select * from vending_flowers where vendingId = 1 and merchantId = 1 and storeId = 1"
+            query = "select * from vending_flowers where vendingId = {} and merchantId = {} and storeId = {}".format( vendingId, storeId, merchantId)
 
             obj["query"] = query
             obj["status"] = "OK"
             obj["data"] = do_select(query)
+        else: 
+            obj["status"] = "Missing parameter"
     else:
         obj["status"] = "Incorrect HTTP verb"
-    
+
     return jsonify(obj)
     
 
