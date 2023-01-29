@@ -8,42 +8,6 @@
 
     <style>
         /* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
     </style>
 
 </head>
@@ -55,139 +19,187 @@
 
     </div>
 
-<style>
-    label {
-    display: inline-block;
-    background: #ddd;
-    border: 1px outset #ccc;
-    border-radius: .3em;
-    padding: .3em 1em;
-    margin: .5em;
-}
+    <style>
+        label {
+            display: inline-block;
+            background: #ddd;
+            border: 1px outset #ccc;
+            border-radius: .3em;
+            padding: .3em 1em;
+            margin: .5em;
+        }
 
-label:active {
-  border-style: inset;
-}
-</style>
-
-
-<!-- Trigger/Open The Modal -->
-<button id="myBtn">Open Modal</button>
+        label:active {
+            border-style: inset;
+        }
+    </style>
 
 
-<div id="myModal" class="modal">
+    <!-- START HTML for MODALS -->
+    <div id="vendingModal" class="modal">
 
-    <!-- Modal content -->
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <p>Some text in the Modal..</p>
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" onClick="closeTheModals()">&times;</span>
+            <p>VENDING</p>
+        </div>
+
     </div>
-  
-  </div>
 
-<script>
-    const username="{{username}}"
-    const merchant="{{merchant}}"
-</script>
-<div id="machines">
-</div>
-<hr>
-<div id="flowers"</div>
-</div>
-<hr/>
-<div id="prerolls"</div>
-</div>
-<hr/>
+    <div id="flowerModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" onClick="closeTheModals()">&times;</span>
+            <p>FLOWER</p>
+        </div>
+
+    </div>
 
 
+    <div id="prerollModal" class="modal">
 
-<script>
-const numbers = ["vendingId", "merchantId", "storeId", "weight_in_grams", "thc_percent", "cbd_percent", "price", "count", "number_of_joints" ]
-function createTable( rows, columns, htmlId) {
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" onClick="closeTheModals()">&times;</span>
+            <p>PREROLL</p>
+        </div>
 
-                let v = "<table border='1'>"
+    </div>
+
+
+    <!-- END HTML for MODALS -->
+    <script>
+        const username = "{{username}}"
+        const merchant = "{{merchant}}"
+    </script>
+    <button onClick="showModal('vendingModal')">Add vending machine</button>
+    <div id="machines">
+    </div>
+
+
+
+
+    <hr>
+    <button onClick="showModal('flowerModal')">Add flower</button>
+
+    <div id="flowers" </div>
+    </div>
+    <hr />
+    <button onClick="showModal('prerollModal')">Add preroll</button>
+
+    <div id="prerolls" </div>
+    </div>
+    <hr />
+
+
+
+    <script>
+        const numbers = ["vendingId", "merchantId", "storeId", "weight_in_grams", "thc_percent", "cbd_percent", "price", "count", "number_of_joints"]
+        function createTable(rows, columns, htmlId) {
+            let v = "<table border='1'>"
+            v += "<tr>"
+            columns.forEach((colname) => {
+                v += "<th>" + colname + "</th>"
+            })
+            v += "<th>Zap</th>"
+            v += "</tr>"
+
+            rows.forEach((row) => {
                 v += "<tr>"
-                columns.forEach((colname)=> { 
-                    v += "<th>" + colname + "</th>"
+                row.forEach((x, i) => {
+                    if (numbers.includes(columns[i])) {
+                        v += "<td class='num'>" + x + "</td>"
+                    } else {
+                        v += "<td>" + x + "</td>"
+                    }
                 })
-                v += "<th>Zap</th>"                
+                v += "<td><button>Delete</button></td>"
+
                 v += "</tr>"
+            })
 
-                rows.forEach((row)=>{
-                    v += "<tr>"
-                    row.forEach((x,i)=>{
-                        if ( numbers.includes( columns[i] ) ) {
-                            v += "<td class='num'>" + x + "</td>"
-                        } else {
-                            v += "<td>" + x + "</td>"
-                        }
-                    })
-                    v += "<td><button>Delete</button></td>"
 
-                    v += "</tr>"
+            v += "</table>"
+            document.getElementById(htmlId).innerHTML = v
+
+
+        }
+
+
+        // const flower_table = "strain", "type", "farm", "weight_in_grams", "thc_percent", "cbd_percent","harvest", "description", "price", "count", "product"
+
+        function populatePage() {
+
+            const myHeaders = { "Content-Type": "application/json" }
+            const raw = JSON.stringify({ "merchantId": merchant });
+            const requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:8080/get_inventory_by_merchant", requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    createTable(data["vending_machines"], data["vending_machines_columns"], "machines")
+                    createTable(data["flowers"], data["flowers_columns"], "flowers")
+                    createTable(data["prerolls"], data["prerolls_columns"], "prerolls")
+
+
                 })
+                .catch(error => {
+                    console.log("%c This was an error because: " + error.message, "background:lightred;")
+                })
+        }
+        populatePage()
 
 
-                v += "</table>"
-                document.getElementById(htmlId).innerHTML = v
+        // const modal = document.getElementById("myModal");
+        //const span = document.getElementsByClassName("close")[0];
 
 
-}
-
- function populatePage() {
-
-        const myHeaders = {"Content-Type": "application/json"}
-        const raw = JSON.stringify({"merchantId": merchant });
-        const requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-        
-        fetch("http://localhost:8080/get_inventory_by_merchant", requestOptions)
-            .then(response => response.json())
-            .then(data => { 
-                createTable(data["vending_machines"], data["vending_machines_columns"], "machines" )
-                createTable(data["flowers"], data["flowers_columns"], "flowers" )
-                createTable(data["prerolls"], data["prerolls_columns"], "prerolls" )
 
 
-            })
-            .catch(error => {
-                console.log("%c This was an error because: " + error.message, "background:lightred;")
-            })
-    }
-    populatePage() 
+        function showModal(type_of_thing_to_add) {
 
 
-    /// // Get the modal
-var modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+            if (type_of_thing_to_add === "flowerModal") {
+                document.getElementById("flowerModal").style.display = "block"
+            } else if (type_of_thing_to_add === "prerollModal") {
+                document.getElementById("prerollModal").style.display = "block"
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+            } else if (type_of_thing_to_add === "vendingModal") {
+                document.getElementById("vendingModal").style.display = "block"
 
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
-}
+            } else {
+                console.log("%c This was an error because " + type_of_thing_to_add + " is not a possible modal.", "background:lightred;")
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
+            }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+            modal.style.display = "block";
+        }
+        function closeTheModals() {
 
-</script>
+            document.getElementById("flowerModal").style.display = "none"
+            document.getElementById("prerollModal").style.display = "none"
+            document.getElementById("vendingModal").style.display = "none"
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+
+            const id = event.target.id
+            if (id !== undefined) {
+                if (id === "flowerModal" || id === "prerollModal" || id === "vendingModal") {
+                    closeTheModals()
+                }
+            }
+        }
+
+    </script>
 
 </body>
 
