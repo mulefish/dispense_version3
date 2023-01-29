@@ -45,38 +45,18 @@ def merchant():
     merchantId= user_ids[username]
     green("username {} and merchantId {} " . format( username, merchantId ))
 
-    # conn = sqlite3.connect('datalayer/dispense.db')
-    # cursor = conn.cursor()
     sqlfetch = f"select * from stores where merchantId = {merchantId};"; 
-    # cursor.execute(sqlfetch)
-    # stores = cursor.fetchall()
-    # dino 
     stores = do_select(sqlfetch)
-    #print(stores)
-    ###
 
     sqlfetch = f"select * from vending_machines where merchantId = {merchantId};"; 
-    # cursor.execute(sqlfetch)
-    # vending_machines = cursor.fetchall()
     vending_machines = do_select(sqlfetch)
-    # print(vending_machines )
 
     sqlfetch = f"select * from vending_flowers where merchantId = {merchantId};"; 
-    # cursor.execute(sqlfetch)
-    # vending_flowers = cursor.fetchall()
     vending_flowers = do_select(sqlfetch)
-    # print(vending_machines )
     
     sqlfetch = f"select * from vending_prerolls where merchantId = {merchantId};"; 
-
-    # cursor.execute(sqlfetch)
-    # vending_prerolls = cursor.fetchall()
-    # print(vending_machines )
     vending_prerolls = do_select(sqlfetch)
-    # conn.close()
 
-    green("vending_machines")
-    print(vending_machines)
     return render_template('index_is_logged_in.html', vending_flowers=vending_flowers,  vending_prerolls=vending_prerolls, merchantName=username,vending_machines=vending_machines,  stores=stores, attempt=14, id=merchantId, username=username)
 
 @app.route('/')
@@ -85,13 +65,44 @@ def lulu():
     return render_template('index_not_logged_in.html')
 
 
+@app.route('/get_inventory_by_merchant', methods=['POST'])
+
+def get_inventory_by_merchant():
+    cyan("get_inventory_by_merchant")
+    x = request.get_json()
+    if ("merchantId" in x ):
+        merchantId = x["merchantId"]
+        sqlfetch = "select strain, type, farm, weight_in_grams, thc_percent, cbd_percent,harvest, description, price, count, product from vending_flowers  where merchantId={}".format(merchantId)
+        flowers = do_select(sqlfetch)
+
+        sqlfetch = "select brand, type, strain, number_of_joints, thc_percent, cbd_percent, harvest, description, price, count, product from vending_prerolls where merchantId={}".format(merchantId)
+        prerolls = do_select(sqlfetch)
+
+        sqlfetch = "select vendingId, merchantId, storeId, version from vending_machines where merchantId={}".format(merchantId)
+        vending_machines = do_select(sqlfetch)
+
+        data = {} 
+        data["flowers_columns"]=["strain", "type", "farm", "weight_in_grams", "thc_percent", "cbd_percent","harvest", "description", "price", "count", "product"]
+        data["flowers"] = flowers 
+        data["prerolls_columns"]=["brand", "type", "strain", "number_of_joints", "thc_percent", "cbd_percent","harvest", "description", "price", "count", "product"]
+        data["prerolls"] = prerolls
+        data["vending_machines_columns"] = ["vendingId", "merchantId", "storeId", "version"]
+        data["vending_machines"] = vending_machines
+
+        return jsonify(data)
+
+    else:
+        return "Missing parameter"
+
+
 @app.route('/inventory_by_machine')
 @login_required
 def inventory_by_machine():
     username = current_user.name 
-    cyan("inventory_by_machine {}".format(username))    
-    # finch 
-    return render_template('inventory_by_machine.html', username=username )
+    merchantId= user_ids[username]
+    cyan("inventory_by_machine username={} merchantId={}".format(username, merchantId))    
+
+    return render_template('inventory_by_machine.html', username=username, merchant=merchantId )
 
 @app.route('/get_vending_machine', methods=['POST'])
 def get_vending_machine():
