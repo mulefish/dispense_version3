@@ -19,7 +19,9 @@
     Vending Flowers: 
     <div id="vending_flowers"></div>
     <br />
-
+    Vending Prerolls:
+    <div id="vending_prerolls"></div>
+    <br />
 <style>
     label {
     display: inline-block;
@@ -79,7 +81,7 @@ label:active {
 
 
 
-        function makeVeningMachineTable() {
+        function makeVendingMachineTable() {
             try {
                 const vending_machines = JSON.parse('{{ vending_machines | tojson }}')
                 const vending_machine_keys = {
@@ -125,10 +127,10 @@ label:active {
                     "count":12
                 }
                 let t = "<table border='1'>"
-                t += "<tr><th>vId</th><th>strain</th><th>type</th><th>farm</th><th>grams</th><th>thc</th><th>cbd</th><th>harvest</th><th>description</th><th>price</th><th>count</th></tr>"
+                t += "<tr><th>vendingId</th><th>strain</th><th>type</th><th>farm</th><th>grams</th><th>thc</th><th>cbd</th><th>harvest</th><th>description</th><th>price</th><th>count</th></tr>"
                 vending_flowers.forEach((vf, i) => {
                     t += "<tr>"
-                        t += "<td>" + vf[vending_flowers_keys["vendingId"]] + "</td>"
+                        t += "<td class='num'>" + vf[vending_flowers_keys["vendingId"]] + "</td>"
                     t += "<td>" + vf[vending_flowers_keys["strain"]] + "</td>"
                     t += "<td>" + vf[vending_flowers_keys["type"]] + "</td>"
                     t += "<td>" + vf[vending_flowers_keys["farm"]] + "</td>"
@@ -150,13 +152,61 @@ label:active {
             }
         }
 
+        
+        function makePrerollTable() { 
+            try {
+                const vending_prerolls = JSON.parse('{{ vending_prerolls | tojson }}')
+                const vending_preroll_keys = {
+                    "vendingId":0,
+                    "merchantId":1,
+                    "storeId": 2,
+                    "brand": 3,
+                    "type": 4,
+                    "strain": 5,
+                    "number_of_joints": 6,
+                    "thc_percent": 7,
+                    "cbd_percent": 8,
+                    "harvest": 9,
+                    "description": 10,
+                    "price": 11,
+                    "count":12,
+                    "product":13
+                }
+                let t = "<table border='1'>"
+                t += "<tr><th>vendingId</th><th>strain</th><th>type</th><th>joints</th><th>thc</th><th>cbd</th><th>harvest</th><th>description</th><th>price</th><th>count</th></tr>"
+                vending_prerolls.forEach((vp, i) => {
+                    t += "<tr>"
+                        t += "<td class='num'>" + vp[vending_preroll_keys["vendingId"]] + "</td>"
+                    t += "<td>" + vp[vending_preroll_keys["strain"]] + "</td>"
+                    t += "<td>" + vp[vending_preroll_keys["type"]] + "</td>"
+                    t += "<td class='num'>" + vp[vending_preroll_keys["number_of_joints"]] + "</td>"
+                    // t += "<td class='num'>" + vp[vending_preroll_keys["weight_in_grams"]] + "</td>"
+                    t += "<td class='num'>" + vp[vending_preroll_keys["thc_percent"]] + "</td>"
+                    t += "<td class='num'>" + vp[vending_preroll_keys["cbd_percent"]] + "</td>"
+                    t += "<td>" + vp[vending_preroll_keys["harvest"]] + "</td>"
+                    t += "<td>" + vp[vending_preroll_keys["description"]] + "</td>"
+                    t += "<td class='num'>" + vp[vending_preroll_keys["price"]] + "</td>"
+                    const count = vp[vending_preroll_keys["count"]]
+                    t += `<td > <input class='num2' type="number" step="1" value='${count}' /></td>`
+                    
+                    t += "</tr>"
+                })
+                t += "</table>"
+                document.getElementById("vending_prerolls").innerHTML = t
+            } catch (boom) {
+                alert(boom)
+            }
+        }
+
+
     </script>
 
 
     <script>
         makeStoresTable()
-        makeVeningMachineTable() 
+        makeVendingMachineTable() 
         makeFlowerTables() 
+        makePrerollTable()
     </script>
 </body>
 

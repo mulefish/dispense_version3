@@ -63,7 +63,7 @@ def merchant():
     vending_flowers = cursor.fetchall()
     # print(vending_machines )
     
-    sqlfetch = f"select * from vending_flowers where merchantId = {merchantId};"; 
+    sqlfetch = f"select * from vending_prerolls where merchantId = {merchantId};"; 
     cursor.execute(sqlfetch)
     vending_prerolls = cursor.fetchall()
     # print(vending_machines )
