@@ -176,7 +176,7 @@ label:active {
                 t += "<tr><th>vendingId</th><th>strain</th><th>type</th><th>joints</th><th>thc</th><th>cbd</th><th>harvest</th><th>description</th><th>price</th><th>count</th></tr>"
                 vending_prerolls.forEach((vp, i) => {
                     t += "<tr>"
-                        t += "<td class='num'>" + vp[vending_preroll_keys["vendingId"]] + "</td>"
+                    t += "<td class='num'>" + vp[vending_preroll_keys["vendingId"]] + "</td>"
                     t += "<td>" + vp[vending_preroll_keys["strain"]] + "</td>"
                     t += "<td>" + vp[vending_preroll_keys["type"]] + "</td>"
                     t += "<td class='num'>" + vp[vending_preroll_keys["number_of_joints"]] + "</td>"
@@ -188,7 +188,6 @@ label:active {
                     t += "<td class='num'>" + vp[vending_preroll_keys["price"]] + "</td>"
                     const count = vp[vending_preroll_keys["count"]]
                     t += `<td > <input class='num2' type="number" step="1" value='${count}' /></td>`
-                    
                     t += "</tr>"
                 })
                 t += "</table>"
@@ -207,6 +206,11 @@ label:active {
         makeVendingMachineTable() 
         makeFlowerTables() 
         makePrerollTable()
+
+
+        function deleteEntry(id) {
+            alert( id )
+        }
     </script>
 </body>
 

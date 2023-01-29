@@ -99,14 +99,16 @@ def get_vending_machine():
             vendingId = x["vendingId"]
             storeId = x["storeId"]
             merchantId = x["merchantId"]
+            print("v={} s={} m={}".format( vendingId, storeId, merchantId ))
             #query = "select * from vending_flowers where vendingId = {} and merchantId = {} and storeId = {}".format(vendingId, merchantId, storeId)
             query = "select * from vending_flowers where vendingId = 1 and merchantId = 1 and storeId = 1"
+
             obj["query"] = query
             obj["status"] = "OK"
             obj["data"] = do_select(query)
     else:
         obj["status"] = "Incorrect HTTP verb"
-
+    
     return jsonify(obj)
     
 
