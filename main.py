@@ -5,6 +5,7 @@ from common import yellow, cyan, green, magenta # , getUsers
 import sqlite3
 import json
 from datalayer.do_selects import do_select
+from datalayer.do_inserts import do_insert
 from flask import jsonify
 # from datalayer.b import goat
 
@@ -65,27 +66,50 @@ def lulu():
     return render_template('index_not_logged_in.html')
 
 
-@app.route('/get_inventory_by_merchant', methods=['POST'])
 
+@app.route('/insert_information', methods=['PUT'])
+def insert_information():
+    cyan("insert_information")
+    x = request.get_json()
+    green(x)
+    TABLE_NAME= x['table']
+    vendingId = x['newVendingId']
+    merchantId = x['newVendingMerchantId']
+    storeId = x['newVendingStoreId']
+    version = x['newVendingVersion']
+
+    if 'newVendingId' in x and 'newVendingMerchantId' in x and 'newVendingStoreId' in x and 'newVendingVersion' in x:
+        insert = "INSERT INTO {} VALUES ({},{},{},'{}')".format(TABLE_NAME, vendingId, merchantId, storeId, version)
+        do_insert(insert)
+        obj = {"status":"ok"}
+        return jsonify(obj)
+    else:
+        obj = {"status":"Missing parameters"}
+        return jsonify( obj )
+
+@app.route('/get_inventory_by_merchant', methods=['POST'])
 def get_inventory_by_merchant():
     cyan("get_inventory_by_merchant")
     x = request.get_json()
     if ("merchantId" in x ):
         merchantId = x["merchantId"]
+        #
         sqlfetch = "select strain, type, farm, weight_in_grams, thc_percent, cbd_percent,harvest, description, price, count, product from vending_flowers  where merchantId={}".format(merchantId)
         flowers = do_select(sqlfetch)
-
+        #
         sqlfetch = "select brand, type, strain, number_of_joints, thc_percent, cbd_percent, harvest, description, price, count, product from vending_prerolls where merchantId={}".format(merchantId)
         prerolls = do_select(sqlfetch)
-
+        #
         sqlfetch = "select vendingId, merchantId, storeId, version from vending_machines where merchantId={}".format(merchantId)
         vending_machines = do_select(sqlfetch)
-
+        #
         data = {} 
         data["flowers_columns"]=["strain", "type", "farm", "weight_in_grams", "thc_percent", "cbd_percent","harvest", "description", "price", "count", "product"]
         data["flowers"] = flowers 
+        #
         data["prerolls_columns"]=["brand", "type", "strain", "number_of_joints", "thc_percent", "cbd_percent","harvest", "description", "price", "count", "product"]
         data["prerolls"] = prerolls
+        #
         data["vending_machines_columns"] = ["vendingId", "merchantId", "storeId", "version"]
         data["vending_machines"] = vending_machines
 

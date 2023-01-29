@@ -46,7 +46,7 @@
                 <tr>
                     <td>vendingId</td>
                     <td><input type="text" value="" id="newVendingId"></td>
-                </tr>                    
+                </tr>
                 <tr>
                     <td>merchant</td>
                     <td><input type="text" value="{{merchant}}" disabled=true id="newVendingMerchantId"></td>
@@ -66,26 +66,30 @@
             <button onClick="discardNewVendingMachine()">Discard</button>
             <button onClick="saveNewVendingMachine()">Save</button>
             <script>
-                function saveNewVendingMachine() { 
+                function saveNewVendingMachine() {
                     const newVendingId = document.getElementById("newVendingId").value
-                     const newVendingMerchantId = document.getElementById("newVendingMerchantId").value
-                     const newVendingStoreId = document.getElementById("newVendingStoreId").value
-                     const newVendingVersion = document.getElementById("newVendingVersion").value
+                    const newVendingMerchantId = document.getElementById("newVendingMerchantId").value
+                    const newVendingStoreId = document.getElementById("newVendingStoreId").value
+                    const newVendingVersion = document.getElementById("newVendingVersion").value
 
                     const newInfo = {
+                        table:"vending_machines",
                         newVendingId,
                         newVendingMerchantId,
                         newVendingStoreId,
                         newVendingVersion
-                    }
 
+                    }
+                    insertInformation(newInfo)
+                    discardNewVendingMachine()
+                    closeTheModals()
                 }
 
-                function discardNewVendingMachine() { 
-                    document.getElementById("newVendingId").value=""
-                    document.getElementById("newVendingMerchantId").value=""
-                    document.getElementById("newVendingStoreId").value=""
-                    document.getElementById("newVendingVersion").value=""
+                function discardNewVendingMachine() {
+                    document.getElementById("newVendingId").value = ""
+                    document.getElementById("newVendingMerchantId").value = ""
+                    document.getElementById("newVendingStoreId").value = ""
+                    document.getElementById("newVendingVersion").value = ""
                 }
 
 
@@ -179,6 +183,38 @@
 
         // const flower_table = "strain", "type", "farm", "weight_in_grams", "thc_percent", "cbd_percent","harvest", "description", "price", "count", "product"
 
+
+        function insertInformation(mapOfInfo) {
+            try {
+                // alert("insertInformation!!! \n" + JSON.stringify(mapOfInfo, null, 2))
+                const myHeaders = { "Content-Type": "application/json" }
+                const raw = JSON.stringify(mapOfInfo);
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+                console.log( raw )
+
+                fetch("http://localhost:8080/insert_information", requestOptions)
+                    .then(response => response.json())
+                    .then(data => {
+                        // alert( JSON.stringify(data) )
+                        populatePage()
+                    })
+                    .catch(error => {
+                        console.log("%c This was an error because: " + error.message, "background:lightred;")
+                    })
+
+            } catch (boom) {
+                console.log("%c This was an error because: " + boom.message, "background:lightred;")
+            }
+
+        }
+
+
+
         function populatePage() {
 
             const myHeaders = { "Content-Type": "application/json" }
@@ -196,8 +232,6 @@
                     createTable(data["vending_machines"], data["vending_machines_columns"], "machines")
                     createTable(data["flowers"], data["flowers_columns"], "flowers")
                     createTable(data["prerolls"], data["prerolls_columns"], "prerolls")
-
-
                 })
                 .catch(error => {
                     console.log("%c This was an error because: " + error.message, "background:lightred;")
