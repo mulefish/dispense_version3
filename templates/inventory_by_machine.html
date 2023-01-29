@@ -73,25 +73,16 @@
                     const newVendingVersion = document.getElementById("newVendingVersion").value
 
                     const newInfo = {
-                        table:"vending_machines",
+                        table: "vending_machines",
                         newVendingId,
                         newVendingMerchantId,
                         newVendingStoreId,
                         newVendingVersion
-
                     }
                     insertInformation(newInfo)
                     discardNewVendingMachine()
                     closeTheModals()
                 }
-
-                function discardNewVendingMachine() {
-                    document.getElementById("newVendingId").value = ""
-                    document.getElementById("newVendingMerchantId").value = ""
-                    document.getElementById("newVendingStoreId").value = ""
-                    document.getElementById("newVendingVersion").value = ""
-                }
-
 
             </script>
 
@@ -101,11 +92,145 @@
     </div>
 
     <div id="flowerModal" class="modal">
+        <!-- data["flowers_columns"]=["strain", "type", "farm", "weight_in_grams", "thc_percent", "cbd_percent","harvest",
+        "description", "price", "count", "product"] -->
 
         <!-- Modal content -->
         <div class="modal-content">
-            <span class="close" onClick="closeTheModals()">&times;</span>
-            <p>FLOWER</p>
+            <p>ADD A FLOWER</p>
+            <table border="1">
+
+                <tr>
+                    <td>vendingId</td>
+                    <td><input type="text" value="" id="newFVendingId"></td>
+                </tr>
+                <tr>
+                    <td>merchantId</td>
+                    <td><input type="text" value="{{merchant}}" disabled=true id="newFVendingMerchantId"></td>
+                </tr>
+
+                <tr>
+                    <td>storeId</td>
+                    <td><input type="text" value="" id="newFVendingStoreId"></td>
+                </tr>
+
+                <tr>
+                    <td>strain</td>
+                    <td><input type="text" value="" id="newFStrain"></td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td><input type="text" id="newFType"></td>
+                </tr>
+
+                <tr>
+                    <td>farm</td>
+                    <td><input type="text" value="" id="newFFarm"></td>
+                </tr>
+                <tr>
+                    <td>weight_in_grams</td>
+                    <td><input type="text" value="" id="newFGrams"></td>
+                </tr>
+                <tr>
+                    <td>thc_percent</td>
+                    <td><input type="text" value="" id="newFTHC"></td>
+                </tr>
+                <tr>
+                    <td>cbd_percent</td>
+                    <td><input type="text" value="" id="newFCBD"></td>
+                </tr>
+                <tr>
+                    <td>harvest</td>
+                    <td><input type="text" value="" id="newFHarvest"></td>
+                </tr>
+                <tr>
+                    <td>description</td>
+                    <td><input type="text" value="" id="newFDesc"></td>
+                </tr>
+
+                <tr>
+                    <td>price</td>
+                    <td><input type="text" value="" id="newFPrice"></td>
+                </tr>
+
+                
+
+                <tr>
+                    <td>count</td>
+                    <td><input type="text" value="" id="newFCount"></td>
+                </tr>
+                <tr>
+                    <td>product</td>
+                    <td><input type="text" disabled=true value="flower" id="newFProduct"></td>
+                </tr>
+
+
+
+
+            </table>
+            <button onClick="discardNewFlower()">Discard</button>
+            <button onClick="saveNewFlower()">Save</button>
+            <script>
+                function saveNewFlower() {
+                    try {
+                        const vendingId = document.getElementById("newFVendingId").value
+                        const merchantId = document.getElementById("newFVendingMerchantId").value
+                        const storeId = document.getElementById("newFVendingStoreId").value
+                        const strain = document.getElementById("newFStrain").value
+                        const type = document.getElementById("newFType").value
+                        const farm = document.getElementById("newFFarm").value
+                        const weight_in_grams = document.getElementById("newFGrams").value
+                        const thc_percent = document.getElementById("newFTHC").value
+                        const cbd_percent = document.getElementById("newFCBD").value
+                        const harvest = document.getElementById("newFHarvest").value
+                        const description = document.getElementById("newFDesc").value
+                        const price = document.getElementById("newFPrice").value
+                        
+                        const count = document.getElementById("newFCount").value
+                        const product = document.getElementById("newFProduct").value
+
+                        const newInfo = {
+                            table: "vending_flowers",
+                            vendingId,
+                            merchantId,
+                            storeId,
+                            strain,
+                            type,
+                            farm,
+                            weight_in_grams,
+                            thc_percent,
+                            cbd_percent,
+                            harvest,
+                            description,
+                            price,
+                            count,
+                            product
+                        }
+                        insertInformation(newInfo)
+                        discardNewFlower()
+                        closeTheModals()
+                    } catch (boom) {
+                        alert(boom)
+                    }
+                }
+
+                function discardNewFlower() {
+                    document.getElementById("newFVendingId").value
+                    document.getElementById("newFVendingMerchantId").value
+                    document.getElementById("newFVendingStoreId").value
+                    document.getElementById("newFStrain").value
+                    document.getElementById("newFType").value
+                    document.getElementById("newFFarm").value
+                    document.getElementById("newFGrams").value
+                    document.getElementById("newFTHC").value
+                    document.getElementById("newFCBD").value
+                    document.getElementById("newFHarvest").value
+                    document.getElementById("newFDesc").value
+                    document.getElementById("newFPrice").value
+                    document.getElementById("newFCount").value
+                    document.getElementById("newFProduct").value
+                }
+            </script>
         </div>
 
     </div>
@@ -186,7 +311,7 @@
 
         function insertInformation(mapOfInfo) {
             try {
-                // alert("insertInformation!!! \n" + JSON.stringify(mapOfInfo, null, 2))
+                alert("insertInformation!!! \n" + JSON.stringify(mapOfInfo, null, 2))
                 const myHeaders = { "Content-Type": "application/json" }
                 const raw = JSON.stringify(mapOfInfo);
                 const requestOptions = {
@@ -195,9 +320,14 @@
                     body: raw,
                     redirect: 'follow'
                 };
-                console.log( raw )
-
-                fetch("http://localhost:8080/insert_information", requestOptions)
+                console.log(raw)
+                let url = undefined 
+                if ( mapOfInfo['table'] === "vending_machines") {
+                    url = "http://localhost:8080/insert_vending"
+                } else if ( mapOfInfo['table'] === "vending_flowers") {
+                    url = "http://localhost:8080/insert_flowers"
+                }
+                fetch(url, requestOptions)
                     .then(response => response.json())
                     .then(data => {
                         // alert( JSON.stringify(data) )
@@ -282,6 +412,14 @@
                 }
             }
         }
+
+        function discardNewVendingMachine() {
+            document.getElementById("newVendingId").value = ""
+            document.getElementById("newVendingMerchantId").value = ""
+            document.getElementById("newVendingStoreId").value = ""
+            document.getElementById("newVendingVersion").value = ""
+        }
+
 
     </script>
 

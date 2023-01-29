@@ -67,9 +67,9 @@ def lulu():
 
 
 
-@app.route('/insert_information', methods=['PUT'])
-def insert_information():
-    cyan("insert_information")
+@app.route('/insert_vending', methods=['PUT'])
+def insert_vending():
+    cyan("insert_vending")
     x = request.get_json()
     green(x)
     TABLE_NAME= x['table']
@@ -86,6 +86,43 @@ def insert_information():
     else:
         obj = {"status":"Missing parameters"}
         return jsonify( obj )
+
+@app.route('/insert_flowers', methods=['PUT'])
+def insert_flowers():
+    cyan("insert_flower")
+    x = request.get_json()
+    green(x)
+    TABLE_NAME= x['table']
+    vendingId = x['vendingId']
+    merchantId = x['merchantId']
+    storeId = x['storeId']
+
+    strain = x["strain"]
+    type = x["type"]
+    farm = x["farm"]
+    weight_in_grams = x["weight_in_grams"]
+    thc_percent = x["thc_percent"]
+    cbd_percent = x["cbd_percent"]
+    harvest = x["harvest"]
+    description = x["description"]
+    price = x["price"]
+    count = x["count"]
+    product = x["product"]
+
+    if 'strain' in x and 'product' in x and 'type' in x:
+        # insert = "INSERT INTO {} (strain, type, farm, weight_in_grams, thc_percent, cbd_percent,harvest,description,count, product) VALUES( {},{},{},'{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(TABLE_NAME, strain, type, farm, weight_in_grams, thc_percent, cbd_percent, harvest, description,count, product )
+        insert = "INSERT INTO {} VALUES( {}, {}, {}, {},{},{},'{}', '{}', '{}', '{}', '{}', {}, '{}', '{}')".format(TABLE_NAME, vendingId,     merchantId    , storeId , strain, type, farm, weight_in_grams, thc_percent, cbd_percent, harvest, description,price, count, product )
+
+        do_insert(insert)
+
+        do_insert(insert)
+        obj = {"status":"ok"}
+        return jsonify(obj)
+    else:
+        obj = {"status":"Missing parameters"}
+        return jsonify( obj )
+
+
 
 @app.route('/get_inventory_by_merchant', methods=['POST'])
 def get_inventory_by_merchant():
